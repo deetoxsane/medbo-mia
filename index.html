@@ -6,298 +6,287 @@
   <title>medbo Ausbildungs-Quiz</title>
   <meta name="robots" content="noindex" />
   <style>
-    /* Seite etwas einrahmen */
     body{margin:0;background:#fafafa;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
     .wrap{max-width:1120px;margin:24px auto;padding:16px;}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- QUIZ-START -->
     <div class="medbo-quiz" data-variant="cards"></div>
+  </div>
 
-    <script>
-    (function(){
-      const QUIZ_DATA = {
-        title: "Welcher Ausbildungsberuf passt zu dir?",
-        subtitle: "Mach den Test und finde heraus, was zu dir passt!",
-        links: {
-          pflege: "https://www.medbo.de/karriere/ausbildung/pflege",
-          pflegehilfe: "https://www.medbo.de/karriere/ausbildung/pflegehilfe",
-          heilerziehung: "https://www.medbo.de/karriere/ausbildung/heilerziehungspflege",
-          mfa: "https://www.medbo.de/karriere/ausbildung/mfa",
-          kaufleute: "https://www.medbo.de/karriere/ausbildung/kauffrau-gesundheitswesen",
-          fi_si: "https://www.medbo.de/karriere/ausbildung/fachinformatiker-systemintegration",
-          fi_ae: "https://www.medbo.de/karriere/ausbildung/fachinformatiker-anwendungsentwicklung"
-        },
-        fallbackImages: {
-          Pflege: "https://via.placeholder.com/800x500?text=Pflege",
-          MFA: "https://via.placeholder.com/800x500?text=MFA",
-          Kaufleute: "https://via.placeholder.com/800x500?text=Verwaltung",
-          IT: "https://via.placeholder.com/800x500?text=IT"
-        },
-        questions: [
-          { q: "Wie würdest du dich selbst beschreiben?", options: [
-            { label: "Geduldig, hilfsbereit, einfühlsam – ich bin für andere da.", score: 1, tag: "Pflege", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_00_51.png" },
-            { label: "Aktiv, flink, kommunikativ – ich mag Action und Menschen.", score: 2, tag: "MFA", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_04_46.png" },
-            { label: "Strukturiert, organisiert, zuverlässig – ich liebe Ordnung.", score: 3, tag: "Kaufleute", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_08_53.png" },
-            { label: "Logisch denkend, technikbegeistert, ruhig – ich bin der IT-Typ.", score: 4, tag: "IT", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_11_08.png" }
-          ]},
-          { q: "Was macht dir in der Schule am meisten Spaß?", options: [
-            { label: "Biologie und Sozialkunde – der Mensch interessiert mich.", score: 1, tag: "Pflege", img:"https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_17_17.png" },
-            { label: "Chemie, Bio, Hauswirtschaft – ich mag praktische Medizin-Themen.", score: 2, tag: "MFA", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_29_51.png" },
-            { label: "Wirtschaft und Deutsch – ich liebe Zahlen, Regeln und Sprache.", score: 3, tag: "Kaufleute", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_35_38.png" },
-            { label: "Informatik und Mathe – Hauptsache digital!", score: 4, tag: "IT", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_40_37.png" }
-          ]},
-          { q: "Du hast einen Tag frei. Was machst du?", options: [
-            { label: "Ich kümmere mich um andere – Familie, Nachbarn, Haustiere", score: 1, tag: "Pflege", img: null },
-            { label: "Ich sortiere mein Zimmer neu und checke Social Media", score: 2, tag: "MFA", img: null },
-            { label: "Ich plane meine Woche oder schreibe an meinem Referat", score: 3, tag: "Kaufleute", img: null },
-            { label: "Ich baue PCs, programmiere oder zocke", score: 4, tag: "IT", img: null }
-          ]},
-          { q: "Was stresst dich?", options: [
-            { label: "Wenn jemand traurig ist oder Schmerzen hat und ich nichts tun kann.", score: 1, tag: "Pflege", img: null },
-            { label: "Wenn 10 Leute auf einmal was von mir wollen und keiner einen Termin hat.", score: 2, tag: "MFA", img: null },
-            { label: "Wenn niemand weiß, wer was macht – Chaos ohne Plan geht gar nicht.", score: 3, tag: "Kaufleute", img: null },
-            { label: "Wenn der Drucker nicht geht und alle mich fragen ‘Kannst du mal…?’", score: 4, tag: "IT", img: null }
-          ]},
-          { q: "Was ist dir in deinem zukünftigen Job wichtig?", options: [
-            { label: "Menschen helfen, Sinn erleben, gebraucht werden.", score: 1, tag: "Pflege", img: null },
-            { label: "Viel Abwechslung, Medizin zum Anfassen, kein Büroalltag.", score: 2, tag: "MFA", img: null },
-            { label: "Struktur, geregelte Abläufe, sicherer Arbeitsplatz.", score: 3, tag: "Kaufleute", img: null },
-            { label: "Technik, Problemlösung, wenig Smalltalk – Hauptsache spannend.", score: 4, tag: "IT", img: null }
-          ]},
-          { q: "Welcher Satz beschreibt dich am besten?", options: [
-            { label: "‘Ich bin für andere da – zuhören, helfen, da sein.’", score: 1, tag: "Pflege", img: null },
-            { label: "‘Ich pack an, kann multitasken und bleib auch im Stress freundlich.’", score: 2, tag: "MFA", img: null },
-            { label: "‘Ich bring Ordnung in die Welt – mit Listen, Plänen und Überblick.’", score: 3, tag: "Kaufleute", img: null },
-            { label: "‘Ich denke in Code – was ich nicht automatisieren kann, ignoriere ich.’", score: 4, tag: "IT", img: null }
-          ]}
-        ],
-        outcomes: [
-          { range: [6,9], team: "Team Pflege", blurb: "Du bist empathisch, aufmerksam und liebst es, für andere da zu sein. Du gibst Sicherheit, Zuwendung und Geduld.", roles: [
-              { name: "Pflegefachfrau / Pflegefachmann", urlKey: "pflege" },
-              { name: "Pflegefachhelfer:in", urlKey: "pflegehilfe" },
-              { name: "Heilerziehungspfleger:in", urlKey: "heilerziehung" }
-          ]},
-          { range: [10,13], team: "Team MFA", blurb: "Du willst medizinisches Know-how und Menschenkontakt verbinden. Du bist kommunikativ, flink und kommst mit Stress klar.", roles: [
-              { name: "Medizinische:r Fachangestellte:r (MFA)", urlKey: "mfa" }
-          ]},
-          { range: [14,17], team: "Team Verwaltung", blurb: "Du denkst wirtschaftlich, planst voraus und bringst Struktur in jedes Chaos.", roles: [
-              { name: "Kauffrau / Kaufmann im Gesundheitswesen", urlKey: "kaufleute" }
-          ]},
-          { range: [18,24], team: "Team IT", blurb: "Du liebst Logik, arbeitest digital und tüftelst gerne an Lösungen. Du denkst analytisch und löst Probleme mit Logik und Klicks.", roles: [
-              { name: "Fachinformatiker:in Systemintegration", urlKey: "fi_si" },
-              { name: "Fachinformatiker:in Anwendungsentwicklung", urlKey: "fi_ae" }
-          ]}
-        ]
-      };
+  <script>
+  (function(){
+    const QUIZ_DATA = {
+      title: "Welcher Ausbildungsberuf passt zu dir?",
+      subtitle: "Mach den Test und finde heraus, was zu dir passt!",
+      links: {
+        pflege: "https://www.medbo.de/karriere/ausbildung/pflege",
+        pflegehilfe: "https://www.medbo.de/karriere/ausbildung/pflegehilfe",
+        heilerziehung: "https://www.medbo.de/karriere/ausbildung/heilerziehungspflege",
+        mfa: "https://www.medbo.de/karriere/ausbildung/mfa",
+        kaufleute: "https://www.medbo.de/karriere/ausbildung/kauffrau-gesundheitswesen",
+        fi_si: "https://www.medbo.de/karriere/ausbildung/fachinformatiker-systemintegration",
+        fi_ae: "https://www.medbo.de/karriere/ausbildung/fachinformatiker-anwendungsentwicklung"
+      },
+      fallbackImages: {
+        Pflege: "https://via.placeholder.com/800x500?text=Pflege",
+        MFA: "https://via.placeholder.com/800x500?text=MFA",
+        Kaufleute: "https://via.placeholder.com/800x500?text=Verwaltung",
+        IT: "https://via.placeholder.com/800x500?text=IT"
+      },
+      questions: [
+        { q: "Wie würdest du dich selbst beschreiben?", options: [
+          { label: "Geduldig, hilfsbereit, einfühlsam – ich bin für andere da.", score: 1, tag: "Pflege", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_00_51.png" },
+          { label: "Aktiv, flink, kommunikativ – ich mag Action und Menschen.", score: 2, tag: "MFA", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_04_46.png" },
+          { label: "Strukturiert, organisiert, zuverlässig – ich liebe Ordnung.", score: 3, tag: "Kaufleute", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_08_53.png" },
+          { label: "Logisch denkend, technikbegeistert, ruhig – ich bin der IT-Typ.", score: 4, tag: "IT", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_11_08.png" }
+        ]},
+        { q: "Was macht dir in der Schule am meisten Spaß?", options: [
+          { label: "Biologie und Sozialkunde – der Mensch interessiert mich.", score: 1, tag: "Pflege", img:"https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_17_17.png" },
+          { label: "Chemie, Bio, Hauswirtschaft – ich mag praktische Medizin-Themen.", score: 2, tag: "MFA", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_29_51.png" },
+          { label: "Wirtschaft und Deutsch – ich liebe Zahlen, Regeln und Sprache.", score: 3, tag: "Kaufleute", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_35_38.png" },
+          { label: "Informatik und Mathe – Hauptsache digital!", score: 4, tag: "IT", img: "https://www.medbo.de/fileadmin/Downloads/medbo_mia/ChatGPT_Image_18._Aug._2025__11_40_37.png" }
+        ]},
+        { q: "Du hast einen Tag frei. Was machst du?", options: [
+          { label: "Ich kümmere mich um andere – Familie, Nachbarn, Haustiere", score: 1, tag: "Pflege", img: null },
+          { label: "Ich sortiere mein Zimmer neu und checke Social Media", score: 2, tag: "MFA", img: null },
+          { label: "Ich plane meine Woche oder schreibe an meinem Referat", score: 3, tag: "Kaufleute", img: null },
+          { label: "Ich baue PCs, programmiere oder zocke", score: 4, tag: "IT", img: null }
+        ]},
+        { q: "Was stresst dich?", options: [
+          { label: "Wenn jemand traurig ist oder Schmerzen hat und ich nichts tun kann.", score: 1, tag: "Pflege", img: null },
+          { label: "Wenn 10 Leute auf einmal was von mir wollen und keiner einen Termin hat.", score: 2, tag: "MFA", img: null },
+          { label: "Wenn niemand weiß, wer was macht – Chaos ohne Plan geht gar nicht.", score: 3, tag: "Kaufleute", img: null },
+          { label: "Wenn der Drucker nicht geht und alle mich fragen ‘Kannst du mal…?’", score: 4, tag: "IT", img: null }
+        ]},
+        { q: "Was ist dir in deinem zukünftigen Job wichtig?", options: [
+          { label: "Menschen helfen, Sinn erleben, gebraucht werden.", score: 1, tag: "Pflege", img: null },
+          { label: "Viel Abwechslung, Medizin zum Anfassen, kein Büroalltag.", score: 2, tag: "MFA", img: null },
+          { label: "Struktur, geregelte Abläufe, sicherer Arbeitsplatz.", score: 3, tag: "Kaufleute", img: null },
+          { label: "Technik, Problemlösung, wenig Smalltalk – Hauptsache spannend.", score: 4, tag: "IT", img: null }
+        ]},
+        { q: "Welcher Satz beschreibt dich am besten?", options: [
+          { label: "‘Ich bin für andere da – zuhören, helfen, da sein.’", score: 1, tag: "Pflege", img: null },
+          { label: "‘Ich pack an, kann multitasken und bleib auch im Stress freundlich.’", score: 2, tag: "MFA", img: null },
+          { label: "‘Ich bring Ordnung in die Welt – mit Listen, Plänen und Überblick.’", score: 3, tag: "Kaufleute", img: null },
+          { label: "‘Ich denke in Code – was ich nicht automatisieren kann, ignoriere ich.’", score: 4, tag: "IT", img: null }
+        ]},
+      ],
+      outcomes: [
+        { range: [6,9], team: "Team Pflege", blurb: "Du bist empathisch, aufmerksam und liebst es, für andere da zu sein. Du gibst Sicherheit, Zuwendung und Geduld.", roles: [
+            { name: "Pflegefachfrau / Pflegefachmann", urlKey: "pflege" },
+            { name: "Pflegefachhelfer:in", urlKey: "pflegehilfe" },
+            { name: "Heilerziehungspfleger:in", urlKey: "heilerziehung" }
+        ]},
+        { range: [10,13], team: "Team MFA", blurb: "Du willst medizinisches Know-how und Menschenkontakt verbinden. Du bist kommunikativ, flink und kommst mit Stress klar.", roles: [
+            { name: "Medizinische:r Fachangestellte:r (MFA)", urlKey: "mfa" }
+        ]},
+        { range: [14,17], team: "Team Verwaltung", blurb: "Du denkst wirtschaftlich, planst voraus und bringst Struktur in jedes Chaos.", roles: [
+            { name: "Kauffrau / Kaufmann im Gesundheitswesen", urlKey: "kaufleute" }
+        ]},
+        { range: [18,24], team: "Team IT", blurb: "Du liebst Logik, arbeitest digital und tüftelst gerne an Lösungen. Du denkst analytisch und löst Probleme mit Logik und Klicks.", roles: [
+            { name: "Fachinformatiker:in Systemintegration", urlKey: "fi_si" },
+            { name: "Fachinformatiker:in Anwendungsentwicklung", urlKey: "fi_ae" }
+        ]}
+      ]
+    };
 
-      const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html!==undefined) e.innerHTML = html; return e; };
+    // 👉 nur EINE Helper-Funktion:
+    const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html!==undefined) e.innerHTML = html; return e; };
 
-      const styleText = `
-        :host, .quiz-root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: #0f172a; }
-        .quiz-card { max-width: 980px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 16px; box-shadow: 0 6px 18px rgba(2,6,23,0.06); overflow: hidden; }
-        .quiz-head { padding: 20px 20px 8px; background: linear-gradient(180deg, #f8fafc, #fff); }
-        .quiz-title { font-size: clamp(20px, 3vw, 28px); font-weight: 800; letter-spacing: -0.02em; }
-        .quiz-sub { color: #475569; margin-top: 4px; }
+    const styleText = `
+      :host, .quiz-root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: #0f172a; }
+      .quiz-card { max-width: 980px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 16px; box-shadow: 0 6px 18px rgba(2,6,23,0.06); overflow: hidden; }
+      .quiz-head { padding: 20px 20px 8px; background: linear-gradient(180deg, #f8fafc, #fff); }
+      .quiz-title { font-size: clamp(20px, 3vw, 28px); font-weight: 800; letter-spacing: -0.02em; }
+      .quiz-sub { color: #475569; margin-top: 4px; }
+      .progress { height: 6px; background: #e2e8f0; position: relative; overflow: hidden; }
+      .progress > span { display: block; height: 100%; width: 0%; background: #b5152b; transition: width .2s; }
+      .step { padding: 18px 20px 6px; }
+      .q { font-weight: 700; font-size: 18px; margin-bottom: 12px; }
+      .options { display: grid; grid-template-columns: 1fr; gap: 12px; }
+      @media (min-width: 760px) { .options { grid-template-columns: 1fr 1fr; } }
+      .opt { position: relative; border-radius: 14px; overflow: hidden; border:1px solid #e5e7eb; background:#fff; cursor:pointer; transition: transform .15s ease, box-shadow .15s, border-color .15s; }
+      .opt:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(2,6,23,0.1); border-color:#b5152b; }
+      .opt input { position:absolute; opacity:0; pointer-events:none; }
+      .opt figure { margin:0; position:relative; aspect-ratio: 16/9; background:#f8fafc; display:block; }
+      .opt img { width:100%; height:100%; object-fit: cover; display:block; transition: transform .3s ease; }
+      .opt:hover img { transform: scale(1.05); }
+      .opt figcaption { position:absolute; inset:auto 12px 12px 12px; padding:12px 14px; border-radius: 10px; font-weight: 700; line-height:1.2; background: rgba(181,21,43,.85); color:#fff; backdrop-filter: blur(4px); transition: background .2s; }
+      .opt:hover figcaption { background: rgba(181,21,43,.95); }
+      .opt.selected { outline: none; border-color:#b5152b; box-shadow: 0 0 0 3px rgba(181,21,43,.25); }
+      .nav { display:flex; justify-content: space-between; gap: 10px; padding: 10px 20px 20px; }
+      .btn { appearance:none; border:1px solid #b5152b; color:#fff; background:#b5152b; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700; transition: background .2s, transform .1s; }
+      .btn:hover:not(:disabled) { background:#a01225; transform: translateY(-1px); }
+      .btn:disabled { opacity:.5; cursor:not-allowed; }
+      .btn.secondary { background:#fff; color:#b5152b; }
+      .btn.secondary:hover:not(:disabled) { background:#fdf2f3; }
+      .res { padding: 20px; }
+      .res h3 { font-size: 22px; margin: 0 0 6px; }
+      .res p { color:#475569; margin:0 0 12px; }
+      .roles { display:grid; grid-template-columns:1fr; gap:10px; }
+      @media (min-width: 640px) { .roles { grid-template-columns: 1fr 1fr; } }
+      .role { border:1px solid #e5e7eb; border-radius:12px; padding:12px; display:flex; justify-content:space-between; gap:12px; align-items:center; transition: border-color .2s, box-shadow .2s; }
+      .role:hover { border-color:#b5152b; box-shadow: 0 4px 12px rgba(181,21,43,.15); }
+      .role a { text-decoration:none; font-weight:700; color:#b5152b; }
+      .role a:hover { text-decoration:underline; }
+      .foot { padding: 0 20px 20px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
+      .tag { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:6px 10px; border-radius:999px; background:#f1f5f9; color:#334155; }
+    `;
 
-        .progress { height: 6px; background: #e2e8f0; position: relative; overflow: hidden; }
-        .progress > span { display: block; height: 100%; width: 0%; background: #b5152b; transition: width .2s; }
+    function mount(root) {
+      const shadow = root.attachShadow ? root.attachShadow({mode:'open'}) : root;
 
-        .step { padding: 18px 20px 6px; }
-        .q { font-weight: 700; font-size: 18px; margin-bottom: 12px; }
+      const style = document.createElement('style');
+      style.textContent = styleText;
 
-        .options { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        @media (min-width: 760px) { .options { grid-template-columns: 1fr 1fr; } }
+      const card = el('section','quiz-card quiz-root');
+      const head = el('div','quiz-head');
+      const h1 = el('div','quiz-title', QUIZ_DATA.title);
+      const sub = el('div','quiz-sub', QUIZ_DATA.subtitle);
 
-        .opt { position: relative; border-radius: 14px; overflow: hidden; border:1px solid #e5e7eb; background:#fff; cursor:pointer; transition: transform .15s ease, box-shadow .15s, border-color .15s; }
-        .opt:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(2,6,23,0.1); border-color:#b5152b; }
-        .opt input { position:absolute; opacity:0; pointer-events:none; }
-        .opt figure { margin:0; position:relative; aspect-ratio: 16/9; background:#f8fafc; display:block; }
-        .opt img { width:100%; height:100%; object-fit: cover; display:block; transition: transform .3s ease; }
-        .opt:hover img { transform: scale(1.05); }
-        .opt figcaption { position:absolute; inset:auto 12px 12px 12px; padding:12px 14px; border-radius: 10px; font-weight: 700; line-height:1.2; background: rgba(181,21,43,.85); color:#fff; backdrop-filter: blur(4px); transition: background .2s; }
-        .opt:hover figcaption { background: rgba(181,21,43,.95); }
-        .opt.selected { outline: none; border-color:#b5152b; box-shadow: 0 0 0 3px rgba(181,21,43,.25); }
+      const prog = el('div','progress');
+      const progBar = el('span'); prog.appendChild(progBar);
 
-        .nav { display:flex; justify-content: space-between; gap: 10px; padding: 10px 20px 20px; }
-        .btn { appearance:none; border:1px solid #b5152b; color:#fff; background:#b5152b; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700; transition: background .2s, transform .1s; }
-        .btn:hover:not(:disabled) { background:#a01225; transform: translateY(-1px); }
-        .btn:disabled { opacity:.5; cursor:not-allowed; }
-        .btn.secondary { background:#fff; color:#b5152b; }
-        .btn.secondary:hover:not(:disabled) { background:#fdf2f3; }
+      head.appendChild(h1); head.appendChild(sub); head.appendChild(prog);
 
-        .res { padding: 20px; }
-        .res h3 { font-size: 22px; margin: 0 0 6px; }
-        .res p { color:#475569; margin:0 0 12px; }
-        .roles { display:grid; grid-template-columns:1fr; gap:10px; }
-        @media (min-width: 640px) { .roles { grid-template-columns: 1fr 1fr; } }
-        .role { border:1px solid #e5e7eb; border-radius:12px; padding:12px; display:flex; justify-content:space-between; gap:12px; align-items:center; transition: border-color .2s, box-shadow .2s; }
-        .role:hover { border-color:#b5152b; box-shadow: 0 4px 12px rgba(181,21,43,.15); }
-        .role a { text-decoration:none; font-weight:700; color:#b5152b; }
-        .role a:hover { text-decoration:underline; }
+      const step = el('div','step');
+      const qEl = el('div','q');
+      const optWrap = el('div','options');
 
-        .foot { padding: 0 20px 20px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
-        .tag { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:6px 10px; border-radius:999px; background:#f1f5f9; color:#334155; }
-      `;
+      step.appendChild(qEl); step.appendChild(optWrap);
 
-      const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html!==undefined) e.innerHTML = html; return e; };
+      const nav = el('div','nav');
+      const backBtn = el('button','btn secondary'); backBtn.textContent = 'Zurück'; backBtn.disabled = true;
+      const nextBtn = el('button','btn'); nextBtn.textContent = 'Weiter';
+      nav.appendChild(backBtn); nav.appendChild(nextBtn);
 
-      function mount(root) {
-        const shadow = root.attachShadow ? root.attachShadow({mode:'open'}) : root;
+      const res = el('div','res');
 
-        const style = document.createElement('style');
-        style.textContent = styleText;
+      const foot = el('div','foot');
+      const tag = el('span','tag');
+      foot.appendChild(tag);
 
-        const card = el('section','quiz-card quiz-root');
-        const head = el('div','quiz-head');
-        const h1 = el('div','quiz-title', QUIZ_DATA.title);
-        const sub = el('div','quiz-sub', QUIZ_DATA.subtitle);
+      card.appendChild(head); card.appendChild(step); card.appendChild(nav); card.appendChild(res); card.appendChild(foot);
 
-        const prog = el('div','progress');
-        const progBar = el('span'); prog.appendChild(progBar);
+      if (shadow !== root) { shadow.appendChild(style); shadow.appendChild(card); }
+      else { document.head.appendChild(style); root.appendChild(card); }
 
-        head.appendChild(h1); head.appendChild(sub); head.appendChild(prog);
+      const state = { i: 0, answers: Array(QUIZ_DATA.questions.length).fill(null) };
 
-        const step = el('div','step');
-        const qEl = el('div','q');
-        const optWrap = el('div','options');
-
-        step.appendChild(qEl); step.appendChild(optWrap);
-
-        const nav = el('div','nav');
-        const backBtn = el('button','btn secondary'); backBtn.textContent = 'Zurück'; backBtn.disabled = true;
-        const nextBtn = el('button','btn'); nextBtn.textContent = 'Weiter';
-        nav.appendChild(backBtn); nav.appendChild(nextBtn);
-
-        const res = el('div','res');
-
-        const foot = el('div','foot');
-        const tag = el('span','tag');
-        foot.appendChild(tag);
-
-        card.appendChild(head); card.appendChild(step); card.appendChild(nav); card.appendChild(res); card.appendChild(foot);
-
-        if (shadow !== root) { shadow.appendChild(style); shadow.appendChild(card); }
-        else { document.head.appendChild(style); root.appendChild(card); }
-
-        const state = { i: 0, answers: Array(QUIZ_DATA.questions.length).fill(null) };
-
-        function getImage(opt){
-          return opt.img || QUIZ_DATA.fallbackImages[opt.tag] || 'https://via.placeholder.com/800x500?text=Antwort';
-        }
-
-        function renderStep() {
-          res.innerHTML = '';
-          const total = QUIZ_DATA.questions.length;
-          const i = state.i;
-          const q = QUIZ_DATA.questions[i];
-
-          qEl.textContent = `Frage ${i+1} von ${total}: ${q.q}`;
-          optWrap.innerHTML = '';
-
-          q.options.forEach((opt, idx) => {
-            const id = `q${i}_opt${idx}`;
-            const row = el('label','opt');
-            row.setAttribute('for', id);
-            const figure = document.createElement('figure');
-            const img = document.createElement('img');
-            img.loading = 'lazy';
-            img.decoding = 'async';
-            img.src = getImage(opt);
-            img.alt = opt.label;
-            const cap = document.createElement('figcaption');
-            cap.textContent = opt.label;
-            figure.appendChild(img);
-            figure.appendChild(cap);
-
-            row.appendChild(figure);
-            const input = document.createElement('input');
-            input.id = id; input.type = 'radio'; input.name = `q_${i}`; input.value = opt.score; input.setAttribute('aria-label', opt.label);
-            row.appendChild(input);
-
-            const selectedIndex = state.answers[i] ? state.answers[i]-1 : null;
-            if (selectedIndex === idx) row.classList.add('selected');
-
-            input.addEventListener('change', () => {
-              state.answers[i] = idx+1;
-              Array.from(optWrap.children).forEach(c=>c.classList.remove('selected'));
-              row.classList.add('selected');
-              nextBtn.disabled = false;
-            });
-
-            row.addEventListener('click', (e)=>{
-              if (e.target !== input) { input.checked = true; input.dispatchEvent(new Event('change', {bubbles:true})); }
-            });
-
-            optWrap.appendChild(row);
-          });
-
-          backBtn.disabled = i===0;
-          nextBtn.textContent = i===total-1 ? 'Ergebnis anzeigen' : 'Weiter';
-
-          const answered = state.answers.filter(Boolean).length;
-          const pct = Math.round((Math.max(i, answered)) / total * 100);
-          progBar.style.width = pct + '%';
-
-          const sum = state.answers.reduce((acc,v)=> acc + (v||0), 0);
-          tag.textContent = `Zwischenstand: ${sum} Punkte`;
-
-          nextBtn.disabled = !state.answers[i];
-        }
-
-        function showResult() {
-          const sum = state.answers.reduce((acc,v)=> acc + (v||0), 0);
-          const oc = QUIZ_DATA.outcomes.find(o=> sum >= o.range[0] && sum <= o.range[1]);
-
-          res.innerHTML = '';
-          const h = el('h3',null, `Dein Match: ${oc ? oc.team : '—'}`);
-          const p = el('p',null, oc ? oc.blurb : 'Kein klares Ergebnis – probier die Fragen nochmal.');
-          res.appendChild(h); res.appendChild(p);
-
-          if (oc) {
-            const list = el('div','roles');
-            oc.roles.forEach(r=>{
-              const url = QUIZ_DATA.links[r.urlKey] || '#';
-              const item = el('div','role');
-              const name = el('div',null, r.name);
-              const a = el('a',null, 'Mehr erfahren');
-              a.href = url; a.target = '_blank'; a.rel='noopener';
-              item.appendChild(name); item.appendChild(a);
-              list.appendChild(item);
-            });
-            res.appendChild(list);
-          }
-
-          tag.textContent = `Gesamt: ${sum} Punkte`;
-
-          nextBtn.textContent = 'Neu starten';
-          backBtn.textContent = 'Zurück zum Ergebnis';
-          nextBtn.disabled = false; backBtn.disabled = false;
-
-          nextBtn.onclick = () => { state.i = 0; state.answers = Array(QUIZ_DATA.questions.length).fill(null); backBtn.textContent='Zurück'; renderStep(); };
-          backBtn.onclick = () => { /* bleib auf Ergebnis */ };
-        }
-
-        backBtn.addEventListener('click',()=>{
-          if (res.innerHTML) { state.i = QUIZ_DATA.questions.length - 1; res.innerHTML=''; backBtn.textContent='Zurück'; renderStep(); return; }
-          if (state.i>0) { state.i--; renderStep(); }
-        });
-
-        nextBtn.addEventListener('click',()=>{
-          if (res.innerHTML) { return; }
-          if (state.i < QUIZ_DATA.questions.length - 1) { state.i++; renderStep(); }
-          else { showResult(); }
-        });
-
-        renderStep();
+      function getImage(opt){
+        return opt.img || QUIZ_DATA.fallbackImages[opt.tag] || 'https://via.placeholder.com/800x500?text=Antwort';
       }
 
-      document.querySelectorAll('.medbo-quiz').forEach(mount);
-    })();
-    </script>
-    <!-- QUIZ-END -->
-  </div>
+      function renderStep() {
+        res.innerHTML = '';
+        const total = QUIZ_DATA.questions.length;
+        const i = state.i;
+        const q = QUIZ_DATA.questions[i];
+
+        qEl.textContent = `Frage ${i+1} von ${total}: ${q.q}`;
+        optWrap.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+          const id = `q${i}_opt${idx}`;
+          const row = el('label','opt');
+          row.setAttribute('for', id);
+          const figure = document.createElement('figure');
+          const img = document.createElement('img');
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.src = getImage(opt);
+          img.alt = opt.label;
+          const cap = document.createElement('figcaption');
+          cap.textContent = opt.label;
+          figure.appendChild(img);
+          figure.appendChild(cap);
+
+          row.appendChild(figure);
+          const input = document.createElement('input');
+          input.id = id; input.type = 'radio'; input.name = `q_${i}`; input.value = opt.score; input.setAttribute('aria-label', opt.label);
+          row.appendChild(input);
+
+          const selectedIndex = state.answers[i] ? state.answers[i]-1 : null;
+          if (selectedIndex === idx) row.classList.add('selected');
+
+          input.addEventListener('change', () => {
+            state.answers[i] = idx+1;
+            Array.from(optWrap.children).forEach(c=>c.classList.remove('selected'));
+            row.classList.add('selected');
+            nextBtn.disabled = false;
+          });
+
+          row.addEventListener('click', (e)=>{
+            if (e.target !== input) { input.checked = true; input.dispatchEvent(new Event('change', {bubbles:true})); }
+          });
+
+          optWrap.appendChild(row);
+        });
+
+        backBtn.disabled = i===0;
+        nextBtn.textContent = i===total-1 ? 'Ergebnis anzeigen' : 'Weiter';
+
+        const answered = state.answers.filter(Boolean).length;
+        const pct = Math.round((Math.max(i, answered)) / total * 100);
+        progBar.style.width = pct + '%';
+
+        const sum = state.answers.reduce((acc,v)=> acc + (v||0), 0);
+        tag.textContent = `Zwischenstand: ${sum} Punkte`;
+
+        nextBtn.disabled = !state.answers[i];
+      }
+
+      function showResult() {
+        const sum = state.answers.reduce((acc,v)=> acc + (v||0), 0);
+        const oc = QUIZ_DATA.outcomes.find(o=> sum >= o.range[0] && sum <= o.range[1]);
+
+        res.innerHTML = '';
+        const h = el('h3',null, `Dein Match: ${oc ? oc.team : '—'}`);
+        const p = el('p',null, oc ? oc.blurb : 'Kein klares Ergebnis – probier die Fragen nochmal.');
+        res.appendChild(h); res.appendChild(p);
+
+        if (oc) {
+          const list = el('div','roles');
+          oc.roles.forEach(r=>{
+            const url = QUIZ_DATA.links[r.urlKey] || '#';
+            const item = el('div','role');
+            const name = el('div',null, r.name);
+            const a = el('a',null, 'Mehr erfahren');
+            a.href = url; a.target = '_blank'; a.rel='noopener';
+            item.appendChild(name); item.appendChild(a);
+            list.appendChild(item);
+          });
+          res.appendChild(list);
+        }
+
+        tag.textContent = `Gesamt: ${sum} Punkte`;
+
+        nextBtn.textContent = 'Neu starten';
+        backBtn.textContent = 'Zurück zum Ergebnis';
+        nextBtn.disabled = false; backBtn.disabled = false;
+
+        nextBtn.onclick = () => { state.i = 0; state.answers = Array(QUIZ_DATA.questions.length).fill(null); backBtn.textContent='Zurück'; renderStep(); };
+        backBtn.onclick = () => { /* bleib auf Ergebnis */ };
+      }
+
+      backBtn.addEventListener('click',()=>{
+        if (res.innerHTML) { state.i = QUIZ_DATA.questions.length - 1; res.innerHTML=''; backBtn.textContent='Zurück'; renderStep(); return; }
+        if (state.i>0) { state.i--; renderStep(); }
+      });
+
+      nextBtn.addEventListener('click',()=>{
+        if (res.innerHTML) { return; }
+        if (state.i < QUIZ_DATA.questions.length - 1) { state.i++; renderStep(); }
+        else { showResult(); }
+      });
+
+      renderStep();
+    }
+
+    document.querySelectorAll('.medbo-quiz').forEach(mount);
+  })();
+  </script>
 </body>
 </html>
