@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>AR Haken-Planer (WebXR-Light)</title>
+    <style>
+      body { margin:0; background:#111; color:#fff;}
+      #status { position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.6); padding:8px 14px; border-radius:6px;}
+    </style>
+  </head>
+  <body>
+    <div id="status">Starte AR ...</div>
+    <script type="module">
+      // Lade three.js und AR-Module (von Skypack CDN)
+      import * as THREE from "https://cdn.skypack.dev/three@0.137.5";
+      import { ARButton } from "https://cdn.skypack.dev/three@0.137.5/examples/jsm/webxr/ARButton.js";
+
+      // Szene, Kamera, Renderer
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      renderer.xr.enabled = true;
+      document.body.appendChild( renderer.domElement );
+
+      // Licht
+      scene.add(new THREE.AmbientLight(0xffffff));
+
+      // ARButton - start Session
+      document.body.appendChild( ARButton.createButton( renderer, { requiredFeatures: [ 'hit-test' ] } ) );
+
+      // Statusanzeige für Feedback
+      const statusBox = document.getElementById("status");
+
+      // Hit-Test (für Punkt auf reale Wand)
+      let hitTestSource = null, xrRefSpace = null;
+      let reticle = null; // Fadenkreuz/Marker
+      let showAnchor = false;
+      let anchorDot = null; // für den "gepinnten Punkt"
+
+      renderer.xr.addEventListener('sessionstart', async () => {
+        statusBox.textContent = "Suche Wand/Fläche...";
+        const session = renderer.xr.getSession();
+        xrRefSpace = await session.requestReferenceSpace('local');
+        const viewerSpace = await session.requestReferenceSpace('viewer');
+        hitTestSource = await session.requestHitTestSource({ space: viewerSpace });
+
+        // Reticle (Zielmarke)
+        const geometry = new THREE.RingGeometry(0.03, 0.04, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        reticle = new THREE.Mesh(geometry, material);
+        reticle.matrixAutoUpdate = false;
+        reticle.visible = false;
+        scene.add(reticle);
+
+        // Listener für Tap
+        renderer.domElement.addEventListener('click', () => {
+          if (reticle.visible && !anchorDot) {
+            // setze Ankerpunkt
+            anchorDot = new THREE.Mesh(
+              new THREE.SphereGeometry(0.02,32,32),
+              new THREE.MeshBasicMaterial({ color: 0x00ff44 })
+            );
+            anchorDot.position.setFromMatrixPosition(reticle.matrix);
+            scene.add(anchorDot);
+            statusBox.textContent = "Haken-Punkt fixiert!";
+          }
+        });
+      });
+
+      renderer.xr.addEventListener('sessionend', () => {
+        statusBox.textContent = "AR-Session beendet.";
+        hitTestSource = null; xrRefSpace = null; reticle = null; anchorDot = null;
+      });
+
+      // Animation/Render loop
+      renderer.setAnimationLoop(function ( timestamp, frame ) {
+        if (hitTestSource && frame) {
+          const refSpace = xrRefSpace;
+          const viewerPose = frame.getViewerPose(refSpace);
+          const hitTestResults = frame.getHitTestResults(hitTestSource);
+
+          if (hitTestResults.length > 0 && !anchorDot) {
+            const hit = hitTestResults[0];
+            const pose = hit.getPose(refSpace);
+            reticle.visible = true;
+            reticle.matrix.fromArray(pose.transform.matrix);
+            statusBox.textContent = "Starte AR. Tippe auf Wand für Hakenpunkt!";
+          } else {
+            if(!anchorDot) statusBox.textContent = "Suche Wand/Fläche...";
+            if (reticle) reticle.visible = false;
+          }
+        }
+        renderer.render(scene, camera);
+      });
+    </script>
+  </body>
+</html>
